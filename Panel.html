@@ -8,6 +8,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Emersya 3D Viewer Styles -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.emersya.com/f/hk_5.7.0.57/vendors/emersya/css/viewer.css" />
+    
     <style>
         /* ===== VARIABLES ===== */
         :root {
@@ -42,6 +46,156 @@
             --gray: #64748B;
             --shadow-lg: 0 25px 50px -12px rgba(0, 0, 0, 0.12);
             --shadow-glow: 0 0 40px rgba(255, 51, 102, 0.15);
+        }
+
+        /* ===== 3D MODEL VIEWER SECTION ===== */
+        .model-section {
+            position: relative;
+            height: 100vh;
+            min-height: 700px;
+            background: #000;
+            overflow: hidden;
+            margin-top: var(--header-height);
+        }
+
+        #modelContainer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            background: #000;
+        }
+
+        .model-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, 
+                rgba(10, 10, 15, 0.7) 0%,
+                rgba(10, 10, 15, 0.4) 50%,
+                rgba(10, 10, 15, 0.8) 100%);
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .model-content {
+            position: relative;
+            z-index: 3;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .model-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: clamp(3.5rem, 8vw, 6rem);
+            font-weight: 900;
+            color: white;
+            margin-bottom: 1rem;
+            text-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+            letter-spacing: -0.02em;
+            line-height: 1.05;
+        }
+
+        .model-subtitle {
+            font-size: 1.5rem;
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 600px;
+            margin-bottom: 2rem;
+            font-weight: 400;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .model-cta {
+            display: flex;
+            gap: 1.25rem;
+            margin-top: 2rem;
+        }
+
+        .model-controls {
+            position: absolute;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 10;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .model-control-btn {
+            width: 56px;
+            height: 56px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+            z-index: 10;
+        }
+
+        .model-control-btn:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+            transform: scale(1.1);
+        }
+
+        .model-info {
+            position: absolute;
+            bottom: 2rem;
+            left: 2rem;
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            max-width: 300px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .model-info h3 {
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .model-info p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Emersya Viewer Overrides */
+        #privateEmersyaViewerContainer {
+            position: absolute !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+            border: 0 !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            overflow: hidden !important;
+            z-index: 1 !important;
+            background: #000 !important;
+        }
+
+        #viewerBackgroundColor {
+            background-color: #ffffff !important;
         }
 
         /* ===== BASE STYLES ===== */
@@ -1541,6 +1695,23 @@
                 padding: 6rem 0;
             }
             
+            .model-section {
+                min-height: 600px;
+            }
+            
+            .model-title {
+                font-size: clamp(2.5rem, 6vw, 4rem);
+            }
+            
+            .model-subtitle {
+                font-size: 1.25rem;
+            }
+            
+            .model-info {
+                max-width: 250px;
+                padding: 1rem;
+            }
+            
             .about-content {
                 grid-template-columns: 1fr;
                 gap: 3rem;
@@ -1574,6 +1745,33 @@
         @media (max-width: 768px) {
             .container {
                 padding: 0 1.25rem;
+            }
+            
+            .model-section {
+                min-height: 500px;
+            }
+            
+            .model-content {
+                padding: 0 1.5rem;
+            }
+            
+            .model-title {
+                font-size: 2.5rem;
+            }
+            
+            .model-subtitle {
+                font-size: 1.125rem;
+            }
+            
+            .model-controls {
+                bottom: 1rem;
+                right: 1rem;
+            }
+            
+            .model-info {
+                bottom: 1rem;
+                left: 1rem;
+                max-width: 200px;
             }
             
             .hero-title {
@@ -1640,6 +1838,23 @@
         }
 
         @media (max-width: 480px) {
+            .model-section {
+                min-height: 400px;
+            }
+            
+            .model-title {
+                font-size: 2rem;
+            }
+            
+            .model-subtitle {
+                font-size: 1rem;
+            }
+            
+            .model-cta {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
             .hero-title {
                 font-size: 2.5rem;
             }
@@ -1690,8 +1905,6 @@
         <div class="loading-content">
             <div class="loading-logo">
                 <div class="loading-logo-inner">
-                    <!-- Your logo will appear here if the image exists -->
-                    <!-- If image doesn't load, a fallback will show -->
                     <img src="logO.png" alt="HAMZA Logo" id="loadingLogo">
                 </div>
             </div>
@@ -1749,44 +1962,123 @@
         </div>
     </nav>
 
-    <!-- Theme Toggle -->
-    <div class="theme-toggle">
-        <button class="theme-btn" id="themeToggle">
-            <i class="fas fa-moon"></i>
-        </button>
-    </div>
+    <!-- 3D Model Section - Using the original Emersya HTML structure -->
+    <section id="home" class="model-section">
+        <!-- Emersya Viewer Container -->
+        <div style="border:0;padding:0;margin:0; height:1px; min-height:100%; width : 1px; min-width:100%;" id="privateEmersyaViewerContainer">
+            <style type="text/css">
+                #viewerBackgroundImage {
+                    width              : 100%;
+                    height             : 100%;
+                    position           : absolute;
+                    top                : 0;
+                    overflow           : hidden;
+                    z-index            : 2;
+                    border             : none;
+                    margin             : 0;
+                    padding            : 0;
+                    opacity            : 1;
+                }
+                #viewerBackgroundColor {
+                    background-color   : #000000;
+                    width              : 100%;
+                    height             : 100%;
+                    position           : absolute;
+                    top                : 0;
+                    overflow           : hidden;
+                    z-index            : 2;
+                    border             : none;
+                    display            : block;
+                    margin             : 0;
+                    padding            : 0;
+                }
+                #viewerPreviewContainer {
+                    width    : 100%;
+                    height   : 100%;
+                    position : absolute;
+                    top      : 0;
+                    overflow : hidden;
+                    z-index  : 2;
+                    border   : none;
+                    margin   : 0;
+                    padding  : 0;
+                    display  : none;
+                }
+                #viewerPreviewImage {
+                    width    : 100%;
+                    height   : 100%;
+                    position : absolute;
+                    top      : 0;
+                    z-index  : 3;
+                    opacity  : 1;
+                }
+            </style>
 
-    <!-- Notification -->
-    <div class="notification" id="notification">
-        <i class="fas fa-gamepad"></i>
-        <span>Welcome to my portfolio!</span>
-    </div>
+            <script type="text/javascript">
+                var imgCnt = 0;
+                    ++imgCnt;
+                        window.viewerImagesReady = !imgCnt;
 
-    <!-- Hero Section -->
-    <section id="home" class="hero">
-        <div class="hero-bg"></div>
-        <div class="container">
-            <div class="hero-content">
-                <h1 class="hero-title">Game Developer<br>& Digital Creator</h1>
-                <p class="hero-subtitle">
-                    Crafting immersive gaming experiences across Scratch, Roblox, and Minecraft. 
-                    Combining innovative design with cutting-edge development to create memorable 
-                    interactive worlds that captivate players and push creative boundaries.
-                </p>
-                
-                <div class="hero-cta">
-                    <a href="#projects" class="btn btn-primary">
-                        <span>View All Projects</span>
-                        <i class="fas fa-arrow-right"></i>
-                    </a>
-                    <a href="#contact" class="btn btn-secondary">
-                        <span>Get In Touch</span>
-                        <i class="fas fa-envelope"></i>
-                    </a>
+                function onImageLoaded() {
+                    if (!--imgCnt) {
+                        if (window.emViewerReady) {
+                            emViewer.initialize();
+                        } else {
+                            window.viewerImagesReady = true;
+                        }
+                    }
+                };
+
+                window.viewerLang           = "";
+                window.viewerDefaultLocale  = "en";
+                window.viewerStatCode       = "BIMZV9A5V7U67KCF";
+                window.viewerStartingPreset = "";
+                window.viewerVersion        = "hk_5.7.0.57";
+                window.cookieEnabled        = true;
+            </script>
+
+            <div id="viewerBackgroundColor">
+                    <img id="viewerBackgroundImage" src="https://cdn.emersya.com/cl/EMI_6DQC4A/s/4C26D9X4CB/backgroundImage?date=1502438760" crossorigin="anonymous" onload=onImageLoaded()>
                 </div>
+
+            <div id="viewerPreviewContainer">
+                            <img id="viewerPreviewImage" src="https://cdn.emersya.com/cl/EMI_6DQC4A/v/4CF5YUFQ6U/preview.png?date=1727355080" crossorigin="anonymous" onload=onImageLoaded()>
+                    </div>
+
+            <div style="opacity : 0; position : absolute">
+                <div style="font-family : OpenSans">1</div>
             </div>
         </div>
-    </section>
+        
+        <div class="model-overlay"></div>
+        
+        <div class="model-content">
+            <h1 class="model-title">Game Developer
+& Digital Creator</h1>
+            <p class="model-subtitle">
+                Combining innovative design with cutting-edge development to create memorable interactive worlds that captivate players and push creative boundaries.            </p>
+            <div class="model-cta">
+                <a href="#projects" class="btn btn-primary">
+                    <span>View My Projects</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+                <a href="#contact" class="btn btn-secondary">
+                    <span>Get In Touch</span>
+                    <i class="fas fa-envelope"></i>
+                </a>
+            </div>
+        </div>
+        
+        <div class="model-controls">
+            <button class="model-control-btn" id="resetView">
+                <i class="fas fa-redo"></i>
+            </button>
+            <button class="model-control-btn" id="toggleRotate">
+                <i class="fas fa-play"></i>
+            </button>
+        </div>
+        
+           </section>
 
     <!-- About Section -->
     <section id="about" class="about">
@@ -1794,7 +2086,6 @@
             <div class="about-content">
                 <div class="about-logo">
                     <div class="logo-circle">
-                        <!-- Your logo will appear here -->
                         <img src="logO.png" alt="HAMZA Logo" class="logo-circle-image">
                     </div>
                 </div>
@@ -2159,7 +2450,350 @@
         </div>
     </footer>
 
+    <!-- Theme Toggle -->
+    <div class="theme-toggle">
+        <button class="theme-btn" id="themeToggle">
+            <i class="fas fa-moon"></i>
+        </button>
+    </div>
+
+    <!-- Notification -->
+    <div class="notification" id="notification">
+        <i class="fas fa-gamepad"></i>
+        <span>Welcome to my portfolio!</span>
+    </div>
+
+    <!-- Emersya 3D Viewer Scripts -->
+    <script src="https://cdn.emersya.com/f/hk_5.7.0.57/vendors/vendors_viewer_iframe3_hk_5.7.0.57.js" type="text/javascript"></script>
+    <script src="https://cdn.emersya.com/f/hk_5.7.0.57/vendors/emersya/js/emersya_viewer_iframe3_hk_5.7.0.57.js" type="text/javascript"></script>
+
     <script>
+        // ===== 3D MODEL INITIALIZATION =====
+        let emViewer;
+
+        // Initialize Emersya viewer after the page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            initLoadingScreen();
+            initGeometricShapes();
+            initCustomCursor();
+            initProgressBar();
+            initBackToTop();
+            initThemeToggle();
+            initNavbar();
+            initAnimations();
+            initProjects();
+            initSkillMeters();
+            initContactForm();
+            initNotification();
+            initInteractiveEffects();
+            
+            // Initialize 3D viewer with a delay to ensure scripts are loaded
+            setTimeout(initEmersyaViewer, 2000);
+        });
+
+        function initEmersyaViewer() {
+            try {
+                // Use the exact container ID that Emersya expects
+                const container = document.getElementById('privateEmersyaViewerContainer');
+                
+                if (!container) {
+                    console.error('Emersya container not found');
+                    return;
+                }
+
+                // Use the exact settings from the original Emersya code
+                var settings = {
+                    ui : {
+                        backgroundColor             : "#000000",
+                        backgroundImagePath         : "https://cdn.emersya.com/cl/EMI_6DQC4A/s/4C26D9X4CB/backgroundImage?date=1502438760",
+                        backgroundOpacity           : 1,
+                        backgroundImageOpacity      : 0.3,
+                        fittingMethod               : 2,
+                        autoStart                   : true,
+                        playMode                    : "ROTATE",
+                        autoPlay                    : false,
+                        stop3DButton                : false,
+                        displayMain3DButton         : false,
+                        displayScrollingElement     : false,
+                        emersyaLogo                 : false,
+                        defaultLogo                 : 1,
+                        customerLogoPath            : "",
+                        logoHorizontalPosition      : 2,
+                        clickableLogo               : false,
+                        hideAnnotations             : true,
+                        hideTriggers                : true,
+                        hideTriggersDuringAnimation : true,
+                        hidePreview                 : true,
+                        startWithFallback           : false,
+                        mainFont                    : "",
+                        loader                      : {
+                            enabled            : true,
+                            borderRadius       : 10,
+                            fontSize           : 13,
+                            displayLogo        : false,
+                            loaderType         : 0
+                        },
+                        presets : {
+                            display  : false,
+                            mode     : 0,
+                            position : 0
+                        },
+                        startingTutorial : {
+                            enabled             : false,
+                            displayAfterLoading : false,
+                        },
+                        handTutorial : {
+                            enabled : false
+                        },
+                        menu                   : {
+                            enabled               : false,
+                            opened                : false,
+                            position              : "left",
+                            toggleable            : false,
+                            offset                : 0,
+                            displayTriggers       : false,
+                            displayAnnotations    : 0,
+                            displayFullScreen     : false,
+                            displayZoomIn         : false,
+                            displayZoomOut        : false,
+                            displayMove           : false,
+                            displayRotate         : false,
+                            displayHelper         : false,
+                            displayViews          : false,
+                            displayPlay           : false,
+                            displayResetAnimation : false
+                        },
+                        help                   : {
+                            enabled                : false,
+                            touchInteraction       : true,
+                            mouseMoveInteraction   : true,
+                            mouseWheelInteraction  : true,
+                            mouseButtonInteraction : false
+                        },
+                        style : {
+                            backgroundOverColor     : "#00b1abff",
+                            backgroundNormalColor   : "#000000DD",
+                            backgroundSelectedColor : "#000000DD",
+                            foregroundOverColor     : "#ffffffff",
+                            foregroundNormalColor   : "#ffffffff",
+                            foregroundSelectedColor : "#00b1abff",
+                            neutralOverColor        : "#888888ff",
+                            neutralNormalColor      : "#888888ff",
+                            neutralSelectedColor    : "#00b1abff",
+                            borderColor             : "#ffffff30",
+                            logoNeutralColor        : "#45c4ff",
+                            isColorful              : false
+                        },
+                        ar : {
+                            arMainColor                         : "#00b1ab",
+                            arSecondColor                       : "#ffffff",
+                            displayAr                           : false,
+                            displayArShareOnSocialNetworkButton : false,
+                            displayArDownloadRenderButton       : false,
+                            displayArAnimationMenu              : false,
+                            displayArMenu                       : false,
+                            displayArStartButton                : false,
+                            arVideoOpacity                      : 0.5,
+                            arPhotoOpacity                      : 0.8,
+                            arEmersyaEnabled                    : false,
+                            arAutostart                         : false,
+                            arMoveAroundEnabled                 : false,
+                            arSimplifiedMode                    : false,
+                            realTimeRefraction                  : 0,
+                            arBackgroundLandscapeImageType      : 0,
+                            arBackgroundLandscapeImagePath      : "",
+                            arBackgroundPortraitImageType       : 0,
+                            arBackgroundPortraitImagePath       : "",
+                            displayPrivacyPolicyMessage         : false,
+                            enableCustomPrivacyPolicyMessage    : false,
+                            customEmersyaPrivacyPolicyMessage   : "",
+                            customWearablePrivacyPolicyMessage  : "",
+                            customPrivacyPolicyValidationMessage : "",
+                        },
+                        annotations : {
+                            mode             : "ONEBYONE",
+                            heightCase       : "AUTO",
+                            hiddenPinOpacity : 0.35,
+                            openingEventType : 0,
+                            moveOnClick      : false,
+                            descriptionFont  : "",
+                            titleFont        : ""
+                        },
+                        configurator : {
+                            enabled : 0
+                        },
+                        fallback : {
+                            type                 : 1,
+                            position             : "bottom",
+                            alignment            : "center",
+                            useDynamicThumbnails : false
+                        },
+                        viewerSettingsFonts : [],
+                        fontsPath           : "https://cdn.emersya.com/cl/"
+                    },
+                    data : {
+                        serverURL                 : "https://emersya.com",
+                        saveRequestsServerURL     : "",
+                        preloadFiles              : false,
+                        modelsPath                : "https://cdn.emersya.com/cl/EMI_6DQC4A/m/",
+                        dataPath                  : "https://cdn.emersya.com/cl/",
+                        loadingDate               : 1727355081,
+                        projectGraphPath          : "https://cdn.emersya.com/cl/EMI_6DQC4A/p/ZEPW824P8Y/ZEPW824P8Y.bin?date=1727355081",
+                        projectDefaultPath        : "https://cdn.emersya.com/cl/EMI_6DQC4A/p/ZEPW824P8Y/ZEPW824P8Y_D?date=1727355081",
+                        projectConfigurationPath  : "",
+                        projectJsonPath           : "",
+                        watchPath                 : "",
+                        modularConfiguratorPath   : "",
+                                        wearableARPath            : "",
+                        plannerPath               : "",
+                        arVFOV                    : "48.5",
+                        arHFOV                    : "62",
+                        OS                        : "Windows",
+                        sceneryPath               : "https://cdn.emersya.com/cl/EMI_6DQC4A/s/4C26D9X4CB/4C26D9X4CB.bin?date=1502438760",
+                        animationsPath            : "https://cdn.emersya.com/cl/EMI_6DQC4A/p/ZEPW824P8Y/a_4CF5YUFQ6U.json?date=1727353927",
+                        viewerFallbackPath        : "",
+                        fallbackPath              : "",
+                        configuratorPath          : "",
+                        fallbackOnly              : false,
+                        statisticCode             : "BIMZV9A5V7U67KCF",
+                        presetsPath               : "https://cdn.emersya.com/cl/EMI_6DQC4A/p/ZEPW824P8Y/presets/default.bin?date=1727355080",
+                        annotationsPath           : "",
+                        translationsPaths         : [],
+                        translated                : false,
+                        startingPreset            : "",
+                        routing                   : "ELZJS6RS17",
+                        isReplay                  : "",
+                        replayLink                : "",
+                        configurationCode         : "",
+                        configurationMetadataPath : "",
+                        routeViewerVersionNumber  : 1,
+                        routeProjectVersionNumber : 1,
+                        viewerVersionNumber       : 1,
+                        viewerPublished           : false,
+                        projectVersionNumber      : 1,
+                        loadedFromConfiguration   : false,
+                        featuresLevel             : 3,
+                        arRouting                 : "showcaseAR/",
+                        viewPointsLibraryFilePath : "",
+                        viewerSettingsFilePath    : "https://cdn.emersya.com/cl/EMI_6DQC4A/vs/OCZUNLS1LQ/OCZUNLS1LQ.json?date=2024-10-01 12:17:22",
+                        companyName               : "EmilienDonnet",
+                        genericConfigurator       : null
+                    },
+                    camera : {
+                        position      : [-46.715805053711,10.598839759827,13.8714427948],
+                        target        : [0.030417026951909,2.4575462341309,0.49064275622368],
+                        up            : [0,1,0],
+                        adaptativeFov : false,
+                        offset : {
+                            x : 0,
+                            y : 0
+                        },
+                        dynamicClippingPlanes : true,
+                        staticViewpoint       : false,
+                        planes : {
+                            near : 0.1,
+                            far  : 100,
+                        },
+                        autoRotateSpeed   : 16,
+                        clockwise         : true,
+                        accelerationMode  : 2,
+                        moveOnDoubleClick : false
+                    },
+                    peripherals : {
+                        listeningTo :{
+                            keyboard     : false,
+                            mouseButtons : false,
+                            mouseMove    : true,
+                            mouseWheel   : true,
+                            touch        : true
+                        },
+                        wheelOnCtrl : false
+                    },
+                    fallback : {
+                        type                    : 1,
+                        imageFormat             : "jpg",
+                        displayMessage          : true,
+                        verticalDivisor         : 3,
+                        horizontalDivisor       : 12,
+                        horizontalLineStart     : 1,
+                        verticalColumnStart     : 10
+                    },
+                    rendering : {
+                        renderSSAO                 : true,
+                        filterSSAO                 : true,
+                        depthAndNormalsReduction   : 1,
+                        ssaoReduction              : 1,
+                        ssaoIterations             : 8,
+                        ssaoIntensity              : 1,
+                        ssaoRadius           	   : 1,
+                        ssaoThickness          	   : 0.3,
+                        ssaoIntensity2             : 0,
+                        ssaoRadius2           	   : 0.5,
+                        ssaoThickness2         	   : 0.3,
+                        ssaoEmissiveThreshold      : 1,
+                        ssaoOpacityThreshold       : 0,
+                        ssaoNormalDisplacement     : false,
+                        graininess                 : 0,
+                        grainOnStopMode            : 1,
+                        screenSpaceReflectDistance : 0,
+                        screenSpaceRefractDistance : 0,
+                        minimumQuality             : 1,
+                        targetFramerate            : 30,
+                        furQualityHD               : 2,
+                        noMaterialTransitions      : false
+                    },
+                    i18n : {
+                        lang : ""
+                    }
+                };
+
+                // Create the viewer
+                emViewer = new stage.emersya.viewer.core(container, settings);
+                
+                // Setup control buttons
+                setupModelControls();
+                
+                showNotification('3D Lamborghini Aventador loaded successfully! 🏎️');
+                
+            } catch (e) {
+                console.error('Error initializing Emersya viewer:', e);
+                showNotification('Failed to load 3D model. Please check console for errors.');
+            }
+        }
+
+        function setupModelControls() {
+            const resetBtn = document.getElementById('resetView');
+            const toggleRotateBtn = document.getElementById('toggleRotate');
+            let isRotating = false;
+
+            if (resetBtn) {
+                resetBtn.addEventListener('click', () => {
+                    if (emViewer) {
+                        emViewer.resetCamera();
+                        showNotification('View reset to default position');
+                    }
+                });
+            }
+
+            if (toggleRotateBtn) {
+                toggleRotateBtn.addEventListener('click', () => {
+                    if (emViewer) {
+                        isRotating = !isRotating;
+                        emViewer.setAutoRotate(isRotating);
+                        
+                        const icon = toggleRotateBtn.querySelector('i');
+                        if (isRotating) {
+                            icon.className = 'fas fa-pause';
+                            showNotification('Auto-rotation enabled');
+                        } else {
+                            icon.className = 'fas fa-play';
+                            showNotification('Auto-rotation disabled');
+                        }
+                    }
+                });
+            }
+        }
+
         // ===== ALL 13 PROJECTS DATA =====
         const allProjectsData = [
             // Scratch Projects (10)
@@ -2310,30 +2944,12 @@
             }
         ];
 
-        // ===== INITIALIZATION =====
-        document.addEventListener('DOMContentLoaded', function() {
-            initLoadingScreen();
-            initGeometricShapes();
-            initCustomCursor();
-            initProgressBar();
-            initBackToTop();
-            initThemeToggle();
-            initNavbar();
-            initAnimations();
-            initProjects();
-            initSkillMeters();
-            initContactForm();
-            initNotification();
-            initInteractiveEffects();
-        });
-
         // ===== FIXED LOADING SCREEN =====
         function initLoadingScreen() {
             const loadingOverlay = document.getElementById('loadingOverlay');
             const loadingBar = document.getElementById('loadingBar');
             const loadingLogo = document.getElementById('loadingLogo');
             
-            // Add error handling for loading logo
             if (loadingLogo) {
                 loadingLogo.onerror = function() {
                     console.log('Loading logo not found, using fallback');
@@ -2346,7 +2962,6 @@
                 };
             }
             
-            // Add error handling for about section logo
             const aboutLogo = document.querySelector('.logo-circle-image');
             if (aboutLogo) {
                 aboutLogo.onerror = function() {
@@ -2383,7 +2998,6 @@
             const shapeTypes = ['triangle', 'square', 'hexagon', 'octagon', 'circle', 'star', 'diamond'];
             const colors = ['color-1', 'color-2', 'color-3', 'color-4', 'color-5'];
             
-            // Create 20 random geometric shapes
             for (let i = 0; i < 20; i++) {
                 const shape = document.createElement('div');
                 const shapeType = shapeTypes[Math.floor(Math.random() * shapeTypes.length)];
@@ -2391,14 +3005,9 @@
                 
                 shape.className = `geo-shape ${shapeType} ${colorClass}`;
                 
-                // Random position
                 const left = Math.random() * 100;
                 const top = Math.random() * 100;
-                
-                // Random size variation
                 const size = 0.6 + Math.random() * 0.4;
-                
-                // Random animation delay and duration
                 const delay = Math.random() * 20;
                 const duration = 20 + Math.random() * 20;
                 
@@ -2427,7 +3036,7 @@
                 }, 100);
             });
             
-            const hoverElements = document.querySelectorAll('a, button, .project-card, .achievement-card, .stat-card, .contact-item, .filter-btn, .social-link');
+            const hoverElements = document.querySelectorAll('a, button, .project-card, .achievement-card, .stat-card, .contact-item, .filter-btn, .social-link, .model-control-btn');
             
             hoverElements.forEach(el => {
                 el.addEventListener('mouseenter', () => {
@@ -2494,7 +3103,6 @@
                     showNotification('Switched to light theme ☀️');
                 }
                 
-                // Update geometric shapes colors
                 updateGeometricShapes();
             });
             
@@ -2686,10 +3294,7 @@
         }
 
         function trackProjectClick(projectId) {
-            // You can add analytics tracking here
             console.log(`Project ${projectId} clicked`);
-            
-            // Optional: Store in localStorage for analytics
             const clicks = JSON.parse(localStorage.getItem('projectClicks') || '{}');
             clicks[projectId] = (clicks[projectId] || 0) + 1;
             localStorage.setItem('projectClicks', JSON.stringify(clicks));
@@ -2731,10 +3336,8 @@
                     return;
                 }
                 
-                // Simulate form submission
                 showNotification('Message sent successfully! I\'ll get back to you soon. 🎮');
                 
-                // Add celebration effect
                 createConfettiEffect();
                 setTimeout(() => {
                     contactForm.reset();
@@ -2769,7 +3372,6 @@
                 }, i * 40);
             }
             
-            // Add animation keyframes
             const style = document.createElement('style');
             style.textContent = `
                 @keyframes confettiFall {
@@ -2809,7 +3411,6 @@
 
         // ===== INTERACTIVE EFFECTS =====
         function initInteractiveEffects() {
-            // Add hover effects to all interactive elements
             const interactiveElements = document.querySelectorAll('.achievement-card, .stat-card, .contact-item, .project-card, .logo-circle');
             
             interactiveElements.forEach(el => {
@@ -2824,7 +3425,6 @@
                 });
             });
             
-            // Random fun facts every 3 minutes
             const funFacts = [
                 "Did you know? Scratch has over 100 million registered users!",
                 "The first video game was created in 1958!",
