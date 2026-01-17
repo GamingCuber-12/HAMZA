@@ -1009,6 +1009,215 @@
             transition: width 1.5s ease;
         }
 
+/* ===== ACCOUNT SECTIONS - VERTICAL RECTANGLES ===== */
+.account-sections {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.5rem;
+    margin-top: 3rem;
+}
+
+.account-card {
+    background: var(--card);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: all 0.4s var(--transition);
+    position: relative;
+    cursor: none;
+    animation: fadeInUp 0.6s ease;
+    animation-fill-mode: both;
+    height: 650px; /* Tall vertical rectangle */
+    display: flex;
+    flex-direction: column;
+}
+
+.light-theme .account-card {
+    border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.account-card:hover {
+    transform: translateY(-12px);
+    border-color: var(--primary);
+    box-shadow: var(--shadow-lg);
+}
+
+.account-header {
+    padding: 2.5rem 2rem 2rem;
+    text-align: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    background: var(--surface);
+}
+
+.light-theme .account-header {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.account-icon {
+    width: 70px;
+    height: 70px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+    font-size: 1.75rem;
+    color: white;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.account-title {
+    font-size: 1.75rem;
+    margin-bottom: 0.5rem;
+    color: var(--light);
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+}
+
+.light-theme .account-title {
+    color: var(--light);
+}
+
+.account-subtitle {
+    color: var(--gray);
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.account-image-container {
+    flex: 1;
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--surface);
+    position: relative;
+    overflow: hidden;
+    min-height: 500px; /* Added for better image display */
+}
+
+.account-image {
+    width: auto; /* Changed from 100% */
+    max-width: 90%; /* Limits width to 90% of container */
+    height: auto; /* Changed from 100% */
+    max-height: 90%; /* Limits height to 90% of container */
+    object-fit: contain; /* Changed from cover to contain */
+    border-radius: var(--radius-md);
+    border: 3px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.5s ease;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+}
+
+.light-theme .account-image {
+    border-color: rgba(0, 0, 0, 0.1);
+}
+
+.account-card:hover .account-image {
+    transform: scale(1.03);
+    border-color: var(--primary);
+}
+
+.account-stats {
+    display: flex;
+    justify-content: space-around;
+    padding: 1.5rem 2rem;
+    background: var(--surface);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.light-theme .account-stats {
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.account-stat {
+    text-align: center;
+}
+
+.stat-number {
+    font-size: 1.75rem;
+    font-weight: 900;
+    color: var(--primary);
+    margin-bottom: 0.25rem;
+    font-family: 'Poppins', sans-serif;
+    display: block;
+}
+
+.stat-label {
+    font-size: 0.85rem;
+    color: var(--gray);
+    font-weight: 500;
+}
+
+.account-footer {
+    padding: 1.5rem 2rem;
+    text-align: center;
+    background: var(--card);
+}
+
+.account-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 1rem 2rem;
+    background: var(--primary);
+    color: white;
+    text-decoration: none;
+    border-radius: var(--radius-xl);
+    font-weight: 700;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    cursor: none;
+    width: 100%;
+    font-family: 'Poppins', sans-serif;
+    letter-spacing: 0.5px;
+}
+
+.account-link:hover {
+    background: var(--secondary);
+    color: var(--dark);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(0, 255, 209, 0.2);
+}
+
+
+        /* Platform-specific colors */
+        .minecraft .account-icon {
+            background: linear-gradient(135deg, #6B8E23, #32CD32);
+        }
+
+        .minecraft .account-link {
+            background: linear-gradient(135deg, #6B8E23, #32CD32);
+        }
+
+        .minecraft .account-link:hover {
+            background: linear-gradient(135deg, #32CD32, #6B8E23);
+        }
+
+        .roblox .account-icon {
+            background: linear-gradient(135deg, #E7352D, #FF6B6B);
+        }
+
+        .roblox .account-link {
+            background: linear-gradient(135deg, #E7352D, #FF6B6B);
+        }
+
+        .roblox .account-link:hover {
+            background: linear-gradient(135deg, #FF6B6B, #E7352D);
+        }
+
+        .scratch .account-icon {
+            background: linear-gradient(135deg, #FF8C00, #FFD700);
+        }
+
+        .scratch .account-link {
+            background: linear-gradient(135deg, #FF8C00, #FFD700);
+        }
+
+        .scratch .account-link:hover {
+            background: linear-gradient(135deg, #FFD700, #FF8C00);
+        }
+
         /* ===== ACHIEVEMENTS ===== */
         .achievements-grid {
             display: grid;
@@ -1688,6 +1897,14 @@
                 grid-template-columns: 1fr 1fr;
                 gap: 3rem;
             }
+            
+            .account-sections {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .account-card {
+                height: 600px;
+            }
         }
 
         @media (max-width: 992px) {
@@ -1739,6 +1956,16 @@
             
             .nav-menu {
                 display: none;
+            }
+            
+            .account-sections {
+                grid-template-columns: 1fr;
+                max-width: 500px;
+                margin: 3rem auto;
+            }
+            
+            .account-card {
+                height: 550px;
             }
         }
 
@@ -1835,6 +2062,24 @@
                 width: 240px;
                 height: 240px;
             }
+            
+            .account-card {
+                height: 500px;
+            }
+            
+            .account-header {
+                padding: 2rem 1.5rem 1.5rem;
+            }
+            
+            .account-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
+            }
+            
+            .account-title {
+                font-size: 1.5rem;
+            }
         }
 
         @media (max-width: 480px) {
@@ -1896,6 +2141,31 @@
                 width: 140px;
                 height: 140px;
             }
+            
+            .account-card {
+                height: 450px;
+            }
+            
+            .account-image-container {
+                padding: 1.5rem;
+            }
+            
+            .account-stats {
+                padding: 1rem 1.5rem;
+            }
+            
+            .stat-number {
+                font-size: 1.5rem;
+            }
+            
+            .account-footer {
+                padding: 1rem 1.5rem;
+            }
+            
+            .account-link {
+                padding: 0.875rem 1.5rem;
+                font-size: 0.95rem;
+            }
         }
     </style>
 </head>
@@ -1952,6 +2222,7 @@
                     <li><a href="#home" class="nav-link active">Home</a></li>
                     <li><a href="#about" class="nav-link">About</a></li>
                     <li><a href="#projects" class="nav-link">Projects</a></li>
+                    <li><a href="#accounts" class="nav-link">Profiles</a></li>
                     <li><a href="#skills" class="nav-link">Skills</a></li>
                     <li><a href="#achievements" class="nav-link">Achievements</a></li>
                     <li><a href="#timeline" class="nav-link">Journey</a></li>
@@ -2133,6 +2404,108 @@
 
             <div class="project-grid" id="projectGrid">
                 <!-- Projects will be loaded here dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Account Sections -->
+    <section id="accounts" class="accounts">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Gaming Profiles</h2>
+                <p class="section-subtitle">Connect with me across different gaming platforms</p>
+            </div>
+
+            <div class="account-sections">
+                <!-- Minecraft Profile -->
+                <div class="account-card minecraft">
+                    <div class="account-header">
+                        <div class="account-icon">
+                            <i class="fas fa-cube"></i>
+                        </div>
+                        <h3 class="account-title">Minecraft Profile</h3>
+                        <p class="account-subtitle">Builder & World Creator</p>
+                    </div>
+                    <div class="account-image-container">
+                        <img src="Minecraft.png" alt="Minecraft Profile" class="account-image" id="minecraftImage">
+                    </div>
+                    <div class="account-stats">
+                        <div class="account-stat">
+                            <span class="stat-number">28K+</span>
+                            <span class="stat-label">Downloads</span>
+                        </div>
+                        <div class="account-stat">
+                            <span class="stat-number">4.9</span>
+                            <span class="stat-label">Rating</span>
+                        </div>
+                    </div>
+                    <div class="account-footer">
+                        <a href="https://www.planetminecraft.com/member/hamza" target="_blank" class="account-link" onclick="showNotification('Opening Minecraft profile...')">
+                            <span>View Minecraft Profile</span>
+                            <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Roblox Profile -->
+                <div class="account-card roblox">
+                    <div class="account-header">
+                        <div class="account-icon">
+                            <i class="fab fa-roblox"></i>
+                        </div>
+                        <h3 class="account-title">Roblox Profile</h3>
+                        <p class="account-subtitle">Experience Developer</p>
+                    </div>
+                    <div class="account-image-container">
+                        <img src="Roblox.png" alt="Roblox Profile" class="account-image" id="robloxImage">
+                    </div>
+                    <div class="account-stats">
+                        <div class="account-stat">
+                            <span class="stat-number">97K+</span>
+                            <span class="stat-label">Total Plays</span>
+                        </div>
+                        <div class="account-stat">
+                            <span class="stat-number">4.85</span>
+                            <span class="stat-label">Avg Rating</span>
+                        </div>
+                    </div>
+                    <div class="account-footer">
+                        <a href="https://www.roblox.com/users/5384608303/profile" target="_blank" class="account-link" onclick="showNotification('Opening Roblox profile...')">
+                            <span>Visit Roblox Profile</span>
+                            <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Scratch Profile -->
+                <div class="account-card scratch">
+                    <div class="account-header">
+                        <div class="account-icon">
+                            <i class="fab fa-scratch"></i>
+                        </div>
+                        <h3 class="account-title">Scratch Profile</h3>
+                        <p class="account-subtitle">Featured Creator</p>
+                    </div>
+                    <div class="account-image-container">
+                        <img src="Scratch.png" alt="Scratch Profile" class="account-image" id="scratchImage">
+                    </div>
+                    <div class="account-stats">
+                        <div class="account-stat">
+                            <span class="stat-number">132K+</span>
+                            <span class="stat-label">Total Plays</span>
+                        </div>
+                        <div class="account-stat">
+                            <span class="stat-number">3</span>
+                            <span class="stat-label">Featured</span>
+                        </div>
+                    </div>
+                    <div class="account-footer">
+                        <a href="https://scratch.mit.edu/users/12hamza" target="_blank" class="account-link" onclick="showNotification('Opening Scratch profile...')">
+                            <span>Follow on Scratch</span>
+                            <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -2419,7 +2792,7 @@
                         <li><a href="#home">Home</a></li>
                         <li><a href="#about">About</a></li>
                         <li><a href="#projects">Projects</a></li>
-                        <li><a href="#skills">Skills</a></li>
+                        <li><a href="#accounts">Profiles</a></li>
                     </ul>
                 </div>
 
@@ -2482,6 +2855,7 @@
             initNavbar();
             initAnimations();
             initProjects();
+            initAccountImages();
             initSkillMeters();
             initContactForm();
             initNotification();
@@ -2794,6 +3168,47 @@
             }
         }
 
+        // ===== ACCOUNT IMAGES INITIALIZATION =====
+        function initAccountImages() {
+            const accountImages = [
+                { id: 'minecraftImage', fallback: 'minecraft-profile.jpg', placeholder: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=600&q=80&crop=entropy' },
+                { id: 'robloxImage', fallback: 'roblox-profile.jpg', placeholder: 'https://images.unsplash.com/photo-1633265486064-086b219458ec?auto=format&fit=crop&w=600&q=80&crop=entropy' },
+                { id: 'scratchImage', fallback: 'scratch-profile.jpg', placeholder: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80&crop=entropy' }
+            ];
+
+            accountImages.forEach(account => {
+                const imgElement = document.getElementById(account.id);
+                if (imgElement) {
+                    imgElement.onerror = function() {
+                        console.log(`${account.fallback} not found, using placeholder`);
+                        this.src = account.placeholder;
+                        this.alt = `${account.fallback.split('-')[0]} Profile - Placeholder`;
+                        
+                        // Add a subtle message overlay
+                        const container = this.parentElement;
+                        const overlay = document.createElement('div');
+                        overlay.style.cssText = `
+                            position: absolute;
+                            top: 50%;
+                            left: 50%;
+                            transform: translate(-50%, -50%);
+                            background: rgba(0, 0, 0, 0.7);
+                            color: white;
+                            padding: 1rem;
+                            border-radius: 10px;
+                            text-align: center;
+                            font-family: 'Poppins', sans-serif;
+                            font-size: 0.9rem;
+                            max-width: 80%;
+                            z-index: 2;
+                        `;
+                        overlay.innerHTML = `Upload your ${account.fallback.split('-')[0]} profile image<br><small>Replace: ${account.fallback}</small>`;
+                        container.appendChild(overlay);
+                    };
+                }
+            });
+        }
+
         // ===== ALL 13 PROJECTS DATA =====
         const allProjectsData = [
             // Scratch Projects (10)
@@ -3036,7 +3451,7 @@
                 }, 100);
             });
             
-            const hoverElements = document.querySelectorAll('a, button, .project-card, .achievement-card, .stat-card, .contact-item, .filter-btn, .social-link, .model-control-btn');
+            const hoverElements = document.querySelectorAll('a, button, .project-card, .achievement-card, .stat-card, .contact-item, .filter-btn, .social-link, .model-control-btn, .account-card');
             
             hoverElements.forEach(el => {
                 el.addEventListener('mouseenter', () => {
@@ -3190,7 +3605,7 @@
                 rootMargin: '0px 0px -50px 0px'
             });
             
-            const elementsToAnimate = document.querySelectorAll('.section-header, .skill-category, .achievement-card, .timeline-item, .stat-card, .contact-item, .contact-form, .project-card, .about-content');
+            const elementsToAnimate = document.querySelectorAll('.section-header, .skill-category, .achievement-card, .timeline-item, .stat-card, .contact-item, .contact-form, .project-card, .about-content, .account-card');
             elementsToAnimate.forEach(el => {
                 observer.observe(el);
             });
@@ -3411,11 +3826,15 @@
 
         // ===== INTERACTIVE EFFECTS =====
         function initInteractiveEffects() {
-            const interactiveElements = document.querySelectorAll('.achievement-card, .stat-card, .contact-item, .project-card, .logo-circle');
+            const interactiveElements = document.querySelectorAll('.achievement-card, .stat-card, .contact-item, .project-card, .logo-circle, .account-card');
             
             interactiveElements.forEach(el => {
                 el.addEventListener('mouseenter', () => {
-                    el.style.transform = 'translateY(-8px)';
+                    if (el.classList.contains('account-card')) {
+                        el.style.transform = 'translateY(-12px)';
+                    } else {
+                        el.style.transform = 'translateY(-8px)';
+                    }
                     el.style.boxShadow = 'var(--shadow-glow)';
                 });
                 
